@@ -13,4 +13,4 @@ def main_flow(url):
     return fact_json
 
 if __name__ == "main":
-    print(main_flow("https://catfact.ninja/fac"))
+    print(main_flow("https://catfact.ninja/fact"))
