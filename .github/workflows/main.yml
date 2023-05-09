@@ -5,6 +5,7 @@ on:
       - "main"
     paths:
       - "main_flow.py"
+      - "extract/*"
 
 # change as needed
 env:
