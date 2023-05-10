@@ -24,7 +24,7 @@ client = Minio(
     secure=MINIO_SSL
 )
 
-@task
+@task(name="get_lastest_object_modified_watermark_storebox")
 def get_lastest_object_modified_watermark() -> datetime.datetime:
     # get max last_modified date from all objects in raw
     last_modified_dates = [o.last_modified for o in client.list_objects('raw', prefix='storebox__receipts', recursive=True)]
@@ -32,7 +32,7 @@ def get_lastest_object_modified_watermark() -> datetime.datetime:
 
     return watermark
 
-@task
+@task(name="retrieve_minio_objects_storebox")
 def retrieve_minio_objects(watermark: datetime.datetime):
     path = 'tmp/'
     bucket_name = "storebox-dump"

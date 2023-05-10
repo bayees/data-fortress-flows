@@ -56,6 +56,7 @@ def generate_calendar():
 
 @flow
 def extract__calendar():
+    print('Extracting calendar')
     calendar = generate_calendar()
     write_raw(calendar, 'calendar/calendar')    
      

@@ -136,7 +136,7 @@ def parse_object(minio_object, schema_version):
     return df_dict
 
 @flow
-def extract__kapacity_bonus():
+def extract__kapacity_utilization_bonus():
     watermark = get_lastest_object_modified_watermark()
 
     for schema_version in schema_versions:
@@ -151,7 +151,7 @@ def extract__kapacity_bonus():
                 write_raw(value, key)
 
 if __name__ == "__main__":
-    extract__kapacity_bonus()
+    extract__kapacity_utilization_bonus()
     
 
 
