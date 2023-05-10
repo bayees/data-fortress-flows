@@ -8,7 +8,7 @@ from extract__storebox import extract__storebox
 from extract__todoist import extract__todoist
 
 @flow
-def main_flow():
+def main():
     extract__calendar()
     extract__dawa()
     extract__home_assistant()
@@ -18,4 +18,4 @@ def main_flow():
     extract__todoist()
 
 if __name__ == "__main__":
-    main_flow()
+    main()
