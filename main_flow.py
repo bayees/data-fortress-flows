@@ -8,9 +8,9 @@ def call_api(url):
     return response.json()
 
 @flow
-def main_flow(url):
+def main_flow(url="https://catfact.ninja/fact"):
     fact_json = call_api(url)
     return fact_json
 
 if __name__ == "main":
-    print(main_flow("https://catfact.ninja/fac"))
+    print(main_flow("https://catfact.ninja/fact"))
