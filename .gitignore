@@ -128,3 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .prefect_config.env
+
+.prefect/
