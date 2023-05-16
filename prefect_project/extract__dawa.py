@@ -70,7 +70,7 @@ def transform(responses: list) -> pd.DataFrame:
 
 @flow
 def extract__dawa():
-    missing_locations = read_curated('curated/dim_location.parquet', ['longitude_degrees', 'latitude_degrees'])
+    missing_locations = read_curated('dash/location.parquet', ['longitude_degrees', 'latitude_degrees'], 'where dawa_enriched = 0')
 
     if check_missing_addresses(missing_locations):
         locations_extract = extract_addresses(locations=missing_locations)

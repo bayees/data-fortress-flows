@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: external_source
+    meta:
+      external_location: "read_parquet('s3://raw/{name}/*.parquet', union_by_name=True)" 
+    tables:   
+      - name: kapacity_bonus__consultancy_hours_detail
+      - name: kapacity_bonus__hours_overview
+      - name: kapacity_bonus__internal_development_hours_detail
+      - name: kapacity_bonus__presales_hours_detail
+      - name: kapacity_bonus__vacation_hours_detail
+      - name: kapacity_bonus__internal_management_hours_detail
+      - name: calendar
+      - name: spiir__postings
+      - name: home_assistant__states
+      - name: dawa__addresses
+      - name: storebox__cards
+      - name: storebox__user
+
+      - name: storebox__receipts
+      - name: notion__budget
+          
