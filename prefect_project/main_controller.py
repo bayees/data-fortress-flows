@@ -19,7 +19,7 @@ def main_run():
     todoist_result = extract__todoist()
 
     DbtCoreOperation(
-        commands=["dbt build"],
+        commands=["dbt deps", "dbt build"],
         project_dir="dbt_project",
         wait_for=[calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, todoist_result],
     ).run()
