@@ -43,7 +43,6 @@ def get_missing_dates() -> list:
     
     base = datetime.today()
     date_list = {(base - timedelta(days=x) - timedelta(days=1)).date() for x in range(30)}
-    print(date_list.difference(object_dates))
     return date_list.difference(object_dates)
 
 @task

@@ -12,12 +12,11 @@ load_dotenv()
 NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 NOTION_BASE_URL = os.getenv("NOTION_BASE_URL")
 
-DATABASE_ID = '4b07934e3a9a4c99bbe4a5730301b86a'
+NOTION_DATABASE_ID = os.getenv("NOTION_DATABASE_ID")
 
 @task
 def extract_budget() -> str:
-    database_id = '4b07934e3a9a4c99bbe4a5730301b86a' # The id is found in the database url either from webpage or copy link to database. Remember to add api to connections
-    url = f"{NOTION_BASE_URL}/{DATABASE_ID}/query"
+    url = f"{NOTION_BASE_URL}/{NOTION_DATABASE_ID}/query"
     reponse = requests.post(url, headers={
         "Authorization": f"Bearer {NOTION_TOKEN}",
         "Notion-Version": "2021-08-16"
