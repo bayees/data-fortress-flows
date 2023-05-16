@@ -9,7 +9,7 @@ from extract__storebox import extract__storebox
 from extract__todoist import extract__todoist
 
 @flow
-def main_flow():
+def main_run():
     calendar_result = extract__calendar()
     dawa_result = extract__dawa()
     home_assistant_result = extract__home_assistant()
@@ -25,4 +25,4 @@ def main_flow():
     ).run()
 
 if __name__ == "__main__":
-    main()
+    main_run()
