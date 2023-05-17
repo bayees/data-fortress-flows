@@ -9,4 +9,5 @@ def dbt_build() -> str:
     ).run()
     return result
 
-dbt_build()
+if __name__ == "__main__":
+    dbt_build()

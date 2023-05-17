@@ -6,7 +6,7 @@ from extract__kapacity_utilization_bonus import extract__kapacity_utilization_bo
 from extract__spiir import extract__spiir
 from extract__storebox import extract__storebox
 from extract__todoist import extract__todoist
-from dbt import dbt_build
+from dbt_flows import dbt_build
 
 @flow
 def main_run():
