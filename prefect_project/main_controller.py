@@ -18,7 +18,7 @@ def main_run():
     storebox_result = extract__storebox()
     todoist_result = extract__todoist()
 
-    dbt_build([calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, todoist_result])
+    dbt_build(wait_for=[calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, todoist_result])
 
 if __name__ == "__main__":
     main_run()
