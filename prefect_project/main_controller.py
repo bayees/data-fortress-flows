@@ -1,4 +1,3 @@
-from prefect_dbt.cli import DbtCoreOperation
 from prefect import flow
 from extract__calendar import extract__calendar
 from extract__dawa import extract__dawa
@@ -7,6 +6,7 @@ from extract__kapacity_utilization_bonus import extract__kapacity_utilization_bo
 from extract__spiir import extract__spiir
 from extract__storebox import extract__storebox
 from extract__todoist import extract__todoist
+from dbt import dbt_build
 
 @flow
 def main_run():
@@ -18,11 +18,7 @@ def main_run():
     storebox_result = extract__storebox()
     todoist_result = extract__todoist()
 
-    DbtCoreOperation(
-        commands=["dbt deps", "dbt build"],
-        project_dir="dbt_project",
-        wait_for=[calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, todoist_result],
-    ).run()
+    dbt_build([calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, todoist_result])
 
 if __name__ == "__main__":
     main_run()
