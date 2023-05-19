@@ -23,3 +23,4 @@ select
     ,is_working_day
     ,holiday
 from {{ ref('stg_calendar') }}
+order by date_actual desc

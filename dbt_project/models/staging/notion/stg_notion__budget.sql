@@ -1,3 +1,10 @@
+{{
+  config(
+    materialized='incremental',
+    unique_key="id"
+  )
+}}
+
 select
         created_time::datetime as created_at,
         last_edited_time::datetime as modified_at,

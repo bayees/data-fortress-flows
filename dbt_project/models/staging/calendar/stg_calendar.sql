@@ -1,3 +1,11 @@
+-- my_model.sql
+{{
+  config(
+    materialized='incremental',
+    unique_key='date_actual'
+  )
+}}
+
 with source as (
       select * from {{ source('external_source', 'calendar') }}
 ),
@@ -6,4 +14,10 @@ renamed as (
         *
     from source
 )
-select * from renamed
+select 
+  * 
+from renamed
+{% if is_incremental() %}
+  -- this filter will only be applied on an incremental run
+  where date_actual > (select max(date_actual) from {{ this }})
+{% endif %}

@@ -1,7 +1,8 @@
-
-/*
-
-*/
+{{
+  config(
+    materialized='incremental',
+  )
+}}
 
 with source_positions as (
 
@@ -29,3 +30,9 @@ select *
 from unwrapped_positions
 where latitude_degrees is not null
 and longitude_degrees is not null
+{% if is_incremental() %}
+
+  -- this filter will only be applied on an incremental run
+  and last_updated > (select max(last_updated) from {{ this }})
+
+{% endif %}
