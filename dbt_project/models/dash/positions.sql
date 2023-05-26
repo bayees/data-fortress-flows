@@ -6,7 +6,8 @@
 select
 	location.latitude_degrees as latitude,
 	location.longitude_degrees as longitude,
-	null as location_of_interest,
+	
+	positions.known_location as location_of_interest,
 	
 	calendar.date_actual,
 

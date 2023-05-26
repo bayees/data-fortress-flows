@@ -1,11 +1,11 @@
 {{
   config(
-    materialized='incremental',
-    unique_key="id"
+    materialized='incremental'
   )
 }}
 
 select
+        id,
         created_time::datetime as created_at,
         last_edited_time::datetime as modified_at,
         replace("properties.Category.select.name", '´', ',') as budget_category,

@@ -13,6 +13,7 @@ from minio import Minio
 import re
 from datetime import datetime, timedelta
 from dateutil import parser
+from websockets.sync.client import connect
 
 load_dotenv()
 
@@ -56,7 +57,6 @@ def extract_states(entity: str, missing_dates: list):
 
     return responses
 
-
 @task
 def transform_states(responses: list) -> pd.DataFrame:
     dfs = []
@@ -66,6 +66,25 @@ def transform_states(responses: list) -> pd.DataFrame:
     df = pd.concat(dfs)
     df.columns = df.columns.str.replace(r"[().]", "_", regex=True)
     return df
+
+@task
+def extract_zones():
+    with connect(f"{os.getenv('HOME_ASSISTANT_BASE_URL').replace('http', 'ws')}/api/websocket") as websocket:
+        auth = {
+            "type": "auth",
+            "access_token": os.getenv('HOME_ASSISTANT_TOKEN')
+        }
+
+        websocket.send(json.dumps(auth))
+        message = json.loads(websocket.recv())
+
+        while message['type'] != "auth_ok":
+            message = json.loads(websocket.recv())
+
+        websocket.send(json.dumps({ 'type': 'zone/list', 'id': 4 })) # Found the path by looking af the network traffic in the browser
+        message = json.loads(websocket.recv())
+        
+        return pd.DataFrame(message['result'])
 
 @flow
 def extract__home_assistant():
@@ -78,7 +97,10 @@ def extract__home_assistant():
     for date, states in states_per_dates.items():
         states_transformed = transform_states(states)
         locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}')
-    
+
+    zones_transformed = extract_zones()
+    write_raw(zones_transformed, f'home_assistant__zones/home_assistant__zones')
+
 if __name__ == "__main__":
     extract__home_assistant()
 

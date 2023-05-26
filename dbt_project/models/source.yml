@@ -14,6 +14,7 @@ sources:
       - name: calendar
       - name: spiir__postings
       - name: home_assistant__states
+      - name: home_assistant__zones
       - name: dawa__addresses
       - name: storebox__cards
       - name: storebox__user

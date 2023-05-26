@@ -33,6 +33,6 @@ and longitude_degrees is not null
 {% if is_incremental() %}
 
   -- this filter will only be applied on an incremental run
-  and last_updated > (select max(last_updated) from {{ this }})
+  and create_at > (select max(create_at) from {{ this }})
 
 {% endif %}
