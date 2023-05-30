@@ -1,4 +1,9 @@
-
+{{
+  config(
+    materialized='incremental',
+    unique_key='receipt_id'
+  )
+}}
 
 with source as (
       select * from {{ source('external_source', 'storebox__receipts') }}

@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized='incremental',
+    unique_key='cardId'
+  )
+}}
 
 with source as (
       select * from {{ source('external_source', 'storebox__cards') }}
