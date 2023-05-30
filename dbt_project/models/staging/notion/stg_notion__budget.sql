@@ -1,8 +1,4 @@
-{{
-  config(
-    materialized='incremental'
-  )
-}}
+
 
 select
         id,

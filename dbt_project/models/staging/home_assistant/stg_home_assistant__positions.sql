@@ -1,8 +1,4 @@
-{{
-  config(
-    materialized='incremental',
-  )
-}}
+
 
 with source_positions as (
 
