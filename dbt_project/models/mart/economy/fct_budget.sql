@@ -1,13 +1,10 @@
 with 
 unpivoted as (
-    {{ dbt_utils.unpivot(
-        ref('stg_notion__budget'), 
-        cast_to='varchar', 
-        exclude=['budget_category', 'year', 'transaction_type'],
-        remove=['created_at', 'modified_at', 'url', 'budget_category', 'transaction_type'],
-        field_name='month',
-        value_name='amount',
-    ) }}
+    unpivot {{ ref('stg_notion__budget') }}
+    on "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"
+    into
+        name month
+        value amount
 ), 
 calendar_mapping as (
     select distinct
