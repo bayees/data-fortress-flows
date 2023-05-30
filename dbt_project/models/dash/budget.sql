@@ -19,7 +19,7 @@ select
  	cast(calendar.year as varchar) || '-' || cast(calendar.month_zero_added as varchar) as month,
 	
 	-- metrics
-	budget.amount as amount,
+	budget.amount::decimal(10, 2) as amount,
 from {{ ref("fct_budget") }} as budget
 left join {{ ref("dim_calendar") }} as calendar
 	on budget.calendar_id = calendar.calendar_id
