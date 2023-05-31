@@ -1,7 +1,6 @@
 {{
   config(
-    materialized='incremental',
-    unique_key="longitude_degrees || '-' || latitude_degrees"
+    materialized='incremental'
   )
 }}
 
