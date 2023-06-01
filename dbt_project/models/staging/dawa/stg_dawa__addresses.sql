@@ -1,4 +1,1 @@
-
-select 
-    * 
-from {{ source('external_source', 'dawa__addresses') }}
+select * from {{ source('external_source', 'dawa__addresses') }}

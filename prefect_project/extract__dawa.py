@@ -46,10 +46,11 @@ def check_missing_addresses(df: pd.DataFrame) -> bool:
 def extract_addresses(locations: pd.DataFrame) -> dict:
     responses = []
     for index, location in locations.iterrows():
+        print('.', end='', flush=True)
         longitude_degrees = location['longitude_degrees']
         latitude_degrees = location['latitude_degrees']
         item_url = f"{DAWA_BASE_URL}/adgangsadresser/reverse?x={longitude_degrees}&y={latitude_degrees}"
-        response = requests.get(item_url, timeout=10).json()
+        response = requests.get(item_url, timeout=30).json()
         responses.append((location, response))
     
     return responses
@@ -71,6 +72,9 @@ def transform(responses: list) -> pd.DataFrame:
 @flow
 def extract__dawa():
     missing_locations = read_curated('dash/location.parquet', ['longitude_degrees', 'latitude_degrees'], 'where dawa_enriched = 0')
+    # missing_locations = read_curated('dash/positions.parquet', ['longitude', 'latitude'])
+    # missing_locations = missing_locations.rename(columns={'longitude': 'longitude_degrees', 'latitude': 'latitude_degrees'})
+    # missing_locations = missing_locations.drop_duplicates()
 
     if check_missing_addresses(missing_locations):
         locations_extract = extract_addresses(locations=missing_locations)
