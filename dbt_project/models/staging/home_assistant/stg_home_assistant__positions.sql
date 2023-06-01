@@ -1,3 +1,10 @@
+{{
+  config(
+    materialized='incremental',
+    unique_key="longitude_degrees||'-'||latitude_degrees"
+  )
+}}
+
 with source_positions as (
 
     select * from {{ source('external_source', 'home_assistant__states') }}
