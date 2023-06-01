@@ -1,9 +1,3 @@
-{{
-  config(
-    materialized='incremental'
-  )
-}}
-
 select
         id,
         created_time::datetime as created_at,

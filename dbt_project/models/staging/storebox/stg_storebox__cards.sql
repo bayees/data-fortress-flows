@@ -1,9 +1,3 @@
-{{
-  config(
-    materialized='incremental',
-  )
-}}
-
 with source as (
       select * from {{ source('external_source', 'storebox__cards') }}
 ),
