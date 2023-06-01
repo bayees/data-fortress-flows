@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized='incremental'
+    )
+}}
+
 with source_positions as (
 
     select * from {{ source('external_source', 'home_assistant__states') }}
