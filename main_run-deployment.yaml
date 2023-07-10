@@ -1,0 +1,49 @@
+###
+### A complete description of a Prefect Deployment for flow 'main-run'
+###
+name: Example Deployment
+description: null
+version: 160f191f25cf8e34da1f6d2d146b778f
+# The work queue that will handle this deployment's runs
+work_queue_name: docker-queue
+work_pool_name: null
+tags: []
+parameters: {}
+schedule: null
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: main-run
+manifest_path: null
+storage:
+  repository: https://github.com/bayees/data-fortress-flows.git
+  reference: main
+  access_token: '**********'
+  include_git_objects: true
+  _block_document_id: a4b5138a-adf1-46cd-bf12-4c07619243e3
+  _block_document_name: github-block
+  _is_anonymous: false
+  block_type_slug: github
+  _block_type_slug: github
+path: ''
+entrypoint: prefect_project.main_controller:main_run
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties: {}
+  required: null
+  definitions: null
+timestamp: '2023-07-10T07:11:56.233571+00:00'
