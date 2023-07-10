@@ -4,7 +4,7 @@ import requests
 import datetime
 import workalendar.europe as workalendar
 from datetime import datetime, timedelta
-from generic_tasks import write_raw
+from tasks.generic_tasks import write_raw
 from prefect import flow, task
 from dotenv import load_dotenv
 import os

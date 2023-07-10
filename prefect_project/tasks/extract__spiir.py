@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 import sqlalchemy as sa
 from prefect import flow, task
-from generic_tasks import write_raw
+from tasks.generic_tasks import write_raw
 from dotenv import load_dotenv
 import os
 

@@ -5,7 +5,7 @@ import datetime
 import workalendar.europe as workalendar
 from datetime import datetime, timedelta
 from prefect import flow, task
-from generic_tasks import write_raw
+from tasks.generic_tasks import write_raw
 
 
 @task

@@ -2,7 +2,7 @@ from importlib.resources import path
 import pandas as pd
 import requests
 import workalendar.europe as workalendar
-from generic_tasks import write_raw
+from tasks.generic_tasks import write_raw
 from prefect import flow, task
 import os
 from dotenv import load_dotenv
