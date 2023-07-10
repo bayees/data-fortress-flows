@@ -1,5 +1,5 @@
 deployments:
 - name: daily_deployment
-  entrypoint: prefect_project/main_controller.py:main
+  entrypoint: prefect_project/main_controller.py:main_run
   work_pool:
     name: docker-work-pool
