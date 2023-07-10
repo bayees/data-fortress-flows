@@ -14,3 +14,9 @@ https://www.prefect.io/guide/blog/flow-of-flows-orchestrating-elt-with-prefect-a
 prefect deployment build prefect_project.main_controller:main_run --name "Example Deployment" --storage-block github/github-block -q docker-queue
 
 prefect deployment apply main_run-deployment.yaml
+
+
+docker compose --profile server --profile agent up -d
+
+
+pip install pandas workalendar dbt-duckdb dbt-core duckdb minio pyarrow python-dotenv requests pytz prefect_dbt

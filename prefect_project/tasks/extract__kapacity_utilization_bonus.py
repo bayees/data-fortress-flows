@@ -6,7 +6,6 @@ import pandas as pd
 import os
 import datetime
 from prefect import flow, task
-import duckdb
 from pathlib import Path
 import pytz
 from .generic_tasks import write_raw

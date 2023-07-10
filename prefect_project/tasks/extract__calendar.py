@@ -1,6 +1,5 @@
 from importlib.resources import path
 import pandas as pd
-import sqlalchemy as sa
 import datetime
 import workalendar.europe as workalendar
 from datetime import datetime, timedelta
