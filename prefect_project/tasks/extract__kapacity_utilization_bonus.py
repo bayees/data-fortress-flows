@@ -9,7 +9,7 @@ from prefect import flow, task
 import duckdb
 from pathlib import Path
 import pytz
-from tasks.generic_tasks import write_raw
+from .generic_tasks import write_raw
 
 load_dotenv()
 

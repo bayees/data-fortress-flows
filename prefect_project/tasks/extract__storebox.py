@@ -6,7 +6,7 @@ import glob
 import os
 import datetime
 from prefect import flow, task
-from tasks.generic_tasks import write_raw
+from .generic_tasks import write_raw
 from minio import Minio
 import pytz
 import shutil
