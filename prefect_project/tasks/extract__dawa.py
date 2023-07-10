@@ -4,7 +4,7 @@ import pandas as pd
 import workalendar.europe as workalendar
 from datetime import datetime, timedelta
 from prefect import flow, task
-from tasks.generic_tasks import write_raw, read_curated
+from .generic_tasks import write_raw, read_curated
 from minio import Minio
 import os
 from dotenv import load_dotenv
