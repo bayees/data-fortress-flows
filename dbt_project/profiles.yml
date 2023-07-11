@@ -3,7 +3,7 @@ data_fortress_dbt_project:
   outputs:
     dev:
       type: duckdb
-      path: './data_fortress.duckdb'
+      path: 'data_fortress.duckdb'
       filesystems:
         - fs: s3
           anon: false
