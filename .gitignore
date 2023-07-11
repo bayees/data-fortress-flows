@@ -133,3 +133,7 @@ dmypy.json
 prefect.yaml
 .vscode/settings.json
 dbt_project/.user.yml
+data_fortress.duckdb
+.gitignore
+main_run-deployment.yaml
+.gitignore
