@@ -1,6 +1,6 @@
 {{ 
 	config(materialized='external', 
-	location='s3://dash/positions.parquet') 
+	location='s3://curated/dash/positions.parquet') 
 }}
 
 select

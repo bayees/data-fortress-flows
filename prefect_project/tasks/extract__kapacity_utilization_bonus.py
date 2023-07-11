@@ -43,10 +43,10 @@ def retrieve_minio_objects(path: str, watermark: datetime.datetime):
     filtered_object = [
         {
             "name": o.object_name,
-            "stats": client.stat_object("kapacity-bonus", o.object_name),
-            "data": client.get_object("kapacity-bonus", o.object_name).data
+            "stats": client.stat_object("landing", o.object_name),
+            "data": client.get_object("landing", o.object_name).data
         }
-        for o in client.list_objects("kapacity-bonus", prefix=path, recursive=True) if o.last_modified > watermark
+        for o in client.list_objects("landing", prefix=path, recursive=True) if o.last_modified > watermark
     ]
     return filtered_object
 
@@ -139,7 +139,7 @@ def extract__kapacity_utilization_bonus():
     watermark = get_lastest_object_modified_watermark()
 
     for schema_version in schema_versions:
-        path = f'/utilization/{schema_version["schema"]}'
+        path = f'kapacity-bonus/utilization/{schema_version["schema"]}'
 
         minio_objects = retrieve_minio_objects(path, watermark)
         

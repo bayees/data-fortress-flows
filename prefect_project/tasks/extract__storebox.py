@@ -35,8 +35,8 @@ def get_lastest_object_modified_watermark() -> datetime.datetime:
 @task(name="retrieve_minio_objects_storebox")
 def retrieve_minio_objects(watermark: datetime.datetime):
     path = 'tmp/'
-    bucket_name = "storebox-dump"
-    for item in client.list_objects(bucket_name, recursive=True):
+    bucket_name = "landing"
+    for item in client.list_objects(bucket_name, prefix='storebox-dump', recursive=True):
         if item.last_modified > watermark:
             client.fget_object(bucket_name, item.object_name, path + item.object_name)
 
