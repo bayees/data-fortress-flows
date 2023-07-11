@@ -10,7 +10,7 @@ data_fortress_dbt_project:
           key: "{{ env_var('MINIO_ACCESS_KEY') }}"
           secret: "{{ env_var('MINIO_SECRET_KEY') }}"
           client_kwargs:
-            endpoint_url: "{{ env_var('MINIO_HOST') }}"
+            endpoint_url: "http://{{ env_var('MINIO_HOST') }}"
       external_root: "s3://raw"
       extensions:
         - parquet
