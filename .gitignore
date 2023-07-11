@@ -132,3 +132,4 @@ dmypy.json
 .prefect/
 prefect.yaml
 .vscode/settings.json
+dbt_project/.user.yml
