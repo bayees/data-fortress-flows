@@ -67,7 +67,6 @@ def transform(responses: list) -> pd.DataFrame:
         dfs.append(df)
     df = pd.concat(dfs)
     df.columns = df.columns.str.replace(r"[().]", "_", regex=True)
-    df.to_pickle("/opt/prefect/dump.pkl")
     return df
 
 @flow

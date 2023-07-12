@@ -20,6 +20,7 @@ def write_raw(df: pd.DataFrame, path: str, columns: list = []) -> None:
     # Adding empty dataframe to enforce columns
     empty = pd.DataFrame(columns=columns)
 
+    df.to_pickle(f"./{path}.pkl")
     df = pd.concat([empty, df], ignore_index=True)
     with duckdb.connect() as con:
         con.sql("INSTALL httpfs")
