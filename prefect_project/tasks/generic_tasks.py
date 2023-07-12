@@ -25,6 +25,7 @@ def write_raw(df: pd.DataFrame, path: str, columns: list = []) -> None:
     with duckdb.connect() as con:
         con.sql("INSTALL httpfs")
         con.sql("LOAD httpfs")
+        con.sql(f"SET GLOBAL pandas_analyze_sample=100000;")
         con.sql(f"SET s3_region='{MINIO_REGION}';")
         con.sql(f"SET s3_endpoint='{MINIO_HOST}';")
         con.sql(f"SET s3_access_key_id='{MINIO_ACCESS_KEY}';")
