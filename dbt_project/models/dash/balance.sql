@@ -3,8 +3,10 @@
 	location='s3://curated/dash/balance.parquet') 
 }}
 
-with a AS (
-	SELECT
+with 
+
+actuals_with_corrections as (
+	select
 		calendar.date_actual,
 		calendar.year::varchar || '-' || calendar.month_zero_added::varchar as month,
 
@@ -24,18 +26,36 @@ with a AS (
 
 		postings.amount::decimal(10,2) as amount,
 
-		case 
-			when row_number() over (PARTITION BY date_trunc('month', date_actual) order by date_actual) = 1 then balance - amount
-			else 0
-		end as _initial_balance,
-		row_number() over (order by date_actual) as row_number
-	FROM {{ ref("fct_postings") }} as postings
-	LEFT JOIN {{ ref("dim_calendar") }} as calendar
-		ON postings.calendar_posting_id = calendar.calendar_id
+	from {{ ref("fct_postings") }} as postings
+	left join {{ ref("dim_calendar") }} as calendar
+		on postings.calendar_posting_id = calendar.calendar_id
 	left join {{ ref("dim_category") }} as category
  		on postings.category_id = category.category_id
-	WHERE account_name = 'C&V Budget'
-	order by date_actual desc
+	where account_name = 'C&V Budget'
+
+	union
+
+	select
+		cast('1999-01-01' as datetime) as date_actual,
+		1900 || '-' || 01::varchar as month,
+
+		'balance correction' as description,
+
+		'C&V budget' as account_name,
+		null as counter_account_name,
+
+		'Vis ikke' as main_category,
+		'Income' as category_type,
+		'Kontooverførsel' as category,
+
+		7042.32 as amount
+
+), 
+ordered_actuals_with_corrections as (
+	select
+		*,
+		row_number() over (order by date_actual) as row_number
+	from actuals_with_corrections
 )
 
 SELECT
@@ -52,11 +72,9 @@ SELECT
 	category,
 
 	amount,
-	_initial_balance,
-	SUM(amount + _initial_balance) OVER (
-		PARTITION BY date_trunc('month', date_actual)
+	SUM(amount) OVER (
 		ORDER BY row_number
 		ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
 	) as balance,
-from a
+from ordered_actuals_with_corrections
 order by row_number desc
