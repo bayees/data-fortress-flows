@@ -4,7 +4,7 @@ from prefect_dbt.cli.commands import DbtCoreOperation
 @flow
 def dbt_build() -> str:
     result = DbtCoreOperation(
-        commands=["dbt deps", "dbt build"],
+        commands=["dbt deps", "dbt run"],
         project_dir="dbt_project",
     ).run()
     return result
