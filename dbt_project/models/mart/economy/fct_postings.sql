@@ -1,17 +1,17 @@
 with
 postings as (
 
-    SELECT 
+    select 
         parent.*,
         child.account_name as counter_account_name 
-    FROM {{ ref('stg_spiir__postings') }} AS parent
-    LEFT JOIN {{ ref('stg_spiir__postings') }} AS child
-        ON parent.counter_posting_id = child.posting_id
+    from {{ ref('stg_spiir__postings') }} as parent
+    left join {{ ref('stg_spiir__postings') }} as child
+        on parent.counter_posting_id = child.posting_id
 
 ),
 receipts_mapping_to_posting as (
 
-    SELECT * FROM {{ ref('int_receipts_mapping_to_posting') }}
+    select * from {{ ref('int_receipts_mapping_to_posting') }}
 
 ),
 receipts as ( 
