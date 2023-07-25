@@ -1,6 +1,6 @@
 {{ 
 	config(materialized='external', 
-	location='s3://curated/dash/balance.parquet') 
+	location='s3://curated/dash/actuals.parquet') 
 }}
 
 with 
