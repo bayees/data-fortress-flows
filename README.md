@@ -19,4 +19,4 @@ prefect deployment apply main_run-deployment.yaml
 docker compose --profile server --profile agent up -d
 
 
-pip install pandas workalendar dbt-duckdb dbt-core duckdb minio pyarrow python-dotenv requests pytz prefect_dbt s3fs
+pip install pandas workalendar dbt-duckdb dbt-core duckdb minio pyarrow python-dotenv requests pytz prefect_dbt s3fs openpyxl
