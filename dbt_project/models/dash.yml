@@ -1,0 +1,32 @@
+version: 2
+
+exposures:
+
+  - name: economy 
+    label: Economy
+    type: dashboard
+    maturity: low
+    description: >
+      Description of the dashboard
+
+    depends_on:
+      - ref('actuals')
+      - ref('budget')
+
+    owner:
+      name: Christian Bay
+      email: christian.bay@me.com
+
+  - name: location_tracking
+    label: Location tracking
+    type: dashboard
+    maturity: low
+    description: >
+      Description of the dashboard
+
+    owner:
+      name: Christian Bay
+      email: christian.bay@me.com
+
+    depends_on:
+      - ref('positions')
