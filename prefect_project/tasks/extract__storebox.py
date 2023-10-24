@@ -34,14 +34,14 @@ def get_lastest_object_modified_watermark() -> datetime.datetime:
 
 @task(name="retrieve_minio_objects_storebox")
 def retrieve_minio_objects(watermark: datetime.datetime):
-    path = 'tmp/'
+    path = os.path.join(os.getcwd(), 'tmp/')
     bucket_name = "landing"
     for item in client.list_objects(bucket_name, prefix='storebox-dump', recursive=True):
         if item.last_modified > watermark:
             client.fget_object(bucket_name, item.object_name, path + item.object_name)
 
-    files = glob.glob(os.path.join(path, "*.zip"))    
-
+    files = glob.glob(os.path.join(path, "**/*.zip"))    
+    print(files)
     return files
 
 @task
@@ -64,7 +64,7 @@ def parse_file(file):
 
 @task
 def clean_tmp_folder(dependencies:list):
-    shutil.rmtree('tmp/')
+    shutil.rmtree(os.path.join(os.getcwd(), 'tmp/'))
 
 @flow
 def extract__storebox():

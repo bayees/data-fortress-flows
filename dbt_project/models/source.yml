@@ -21,4 +21,6 @@ sources:
 
       - name: storebox__receipts
       - name: notion__budget
+      - name: logseq__commits
+      - name: logseq__modified_files
           
