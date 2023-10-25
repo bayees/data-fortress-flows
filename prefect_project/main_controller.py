@@ -7,6 +7,7 @@ from prefect_project.tasks.extract__spiir import extract__spiir
 from prefect_project.tasks.extract__storebox import extract__storebox
 from prefect_project.tasks.extract__todoist import extract__todoist
 from prefect_project.tasks.extract__notion import extract__notion
+from prefect_project.tasks.extract__logseq import extract__logseq
 from prefect_project.tasks.dbt_flows import dbt_build
 
 @flow
@@ -18,9 +19,10 @@ def main_run():
     spiir_result = extract__spiir()
     storebox_result = extract__storebox()
     #todoist_result = extract__todoist()
+    logseq_result = extract__logseq()
     notion_result = extract__notion()
 
-    dbt_build(wait_for=[calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, notion_result])
+    dbt_build(wait_for=[calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, notion_result, logseq_result])
 
 if __name__ == "__main__":
     main_run()
