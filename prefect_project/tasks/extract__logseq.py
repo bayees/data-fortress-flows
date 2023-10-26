@@ -2,7 +2,7 @@ from importlib.resources import path
 import pandas as pd
 import requests
 import workalendar.europe as workalendar
-from .generic_tasks import write_raw, read_watermark
+from generic_tasks import write_raw, read_watermark
 from prefect import flow, task
 import os
 from pydriller import Repository
@@ -12,7 +12,10 @@ from datetime import datetime, timedelta
 
 load_dotenv()
 
-urls = ["https://github.com/bayees/logseq.git"]
+GITHUB_USER = os.getenv("GITHUB_USER")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+
+urls = [f"https://{GITHUB_USER}:{GITHUB_TOKEN}@github.com/bayees/logseq.git"]
 
 def extract_modified_files(hash, files) -> pd.DataFrame:
     
