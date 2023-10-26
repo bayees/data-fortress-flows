@@ -51,6 +51,6 @@ def read_watermark(column: str, folder: str) -> datetime.datetime:
     with duckdb.connect() as con:
         config(con)
         try:
-            return con.sql(f"SELECT MAX({column}) FROM read_parquet('s3://{folder}');").df()
+            return con.sql(f"SELECT MAX({column}) FROM read_parquet('s3://{folder}');").df().iloc[0,0]
         except IOException:
             return None

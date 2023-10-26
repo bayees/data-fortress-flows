@@ -2,7 +2,7 @@ from importlib.resources import path
 import pandas as pd
 import requests
 import workalendar.europe as workalendar
-from .generic_tasks import write_raw, read_watermark
+from generic_tasks import write_raw, read_watermark
 from prefect import flow, task
 import os
 from pydriller import Repository
