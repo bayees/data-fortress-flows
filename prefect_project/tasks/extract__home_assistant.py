@@ -64,6 +64,10 @@ def transform_states(responses: list) -> pd.DataFrame:
         df = pd.json_normalize(response, max_level=0)
         dfs.append(df)
     df = pd.concat(dfs)
+    
+    # Filter where attributes is different from {}
+    df = df[df['attributes'] != {}]
+
     df.columns = df.columns.str.replace(r"[().]", "_", regex=True)
     return df
 
