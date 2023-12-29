@@ -139,3 +139,4 @@ main_run-deployment.yaml
 .gitignore
 .DS_Store
 *.env
+dbt_project/profiles.yml

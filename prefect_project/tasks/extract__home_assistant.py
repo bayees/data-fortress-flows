@@ -6,7 +6,7 @@ import datetime
 import workalendar.europe as workalendar
 from datetime import datetime, timedelta
 from prefect import flow, task
-from .generic_tasks import write_raw
+from generic_tasks import write_raw
 import os
 from dotenv import load_dotenv
 from minio import Minio
@@ -14,6 +14,9 @@ import re
 from datetime import datetime, timedelta
 from dateutil import parser
 from websockets.sync.client import connect
+from minio import Minio
+import io
+import json
 
 load_dotenv()
 
@@ -90,6 +93,19 @@ def extract_zones():
         
         return pd.DataFrame(message['result'])
 
+@task
+def write_landing_states(date, states) -> list:
+    # Retrieve all dates that is missing as object in minio
+    content = json.dumps(states).encode('utf-8')
+    
+    client.put_object(
+            bucket_name='landing',
+            object_name=f'home-assistant-states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}.json',
+            data=io.BytesIO(content),
+            length=len(content),
+        )
+
+
 @flow
 def extract__home_assistant():
     missing_dates = get_missing_dates()
@@ -99,7 +115,8 @@ def extract__home_assistant():
     )
 
     for date, states in states_per_dates.items():
-        states_transformed = transform_states(states)
+        write_landing_result = write_landing_states(date, states)
+        states_transformed = transform_states(write_landing_result, states)
         locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}')
 
     zones_transformed = extract_zones()
