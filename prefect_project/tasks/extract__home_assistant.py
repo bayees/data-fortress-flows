@@ -61,13 +61,13 @@ def extract_states(entity: str, missing_dates: list):
     return responses
 
 @task
-def transform_states(df: pd.DataFrame, responses: list) -> pd.DataFrame:
+def transform_states(responses: list) -> pd.DataFrame:
     dfs = []
     for response in responses:
         df = pd.json_normalize(response, max_level=0)
         dfs.append(df)
     df = pd.concat(dfs)
-    
+
     # Filter where attributes is different from {}
     df = df[df['attributes'] != {}]
 
@@ -93,18 +93,6 @@ def extract_zones():
         
         return pd.DataFrame(message['result'])
 
-@task
-def write_landing_states(date, states) -> list:
-    # Retrieve all dates that is missing as object in minio
-    content = json.dumps(states).encode('utf-8')
-    
-    client.put_object(
-            bucket_name='landing',
-            object_name=f'home-assistant-states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}.json',
-            data=io.BytesIO(content),
-            length=len(content),
-        )
-
 
 @flow
 def extract__home_assistant():
@@ -115,8 +103,7 @@ def extract__home_assistant():
     )
 
     for date, states in states_per_dates.items():
-        write_landing_result = write_landing_states(date, states)
-        states_transformed = transform_states(write_landing_result, states)
+        states_transformed = transform_states(states)
         locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}', overwrite_field_names="entity_id, state, attributes::map(varchar, varchar) as attributes, last_changed, last_updated")
 
     zones_transformed = extract_zones()
