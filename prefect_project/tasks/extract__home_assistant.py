@@ -40,6 +40,23 @@ client = Minio(
     secure=MINIO_SSL
 )
 
+overwrite_field_names = """
+entity_id,
+state,
+map {
+    'source_type': attributes.source_type,
+    'battery_level': attributes.battery_level,
+    'latitude': attributes.latitude,
+    'longitude': attributes.longitude,
+    'gps_accuracy': attributes.gps_accuracy,
+    'altitude': attributes.gps_accuracy,
+    'vertical_accuracy': attributes.gps_accuracy,
+    'friendly_name': attributes.gps_accuracy,
+  },
+  last_changed,
+  last_updated
+"""
+
 @task
 def get_missing_dates() -> list:
     # Retrieve all dates that is missing as object in minio
@@ -104,7 +121,7 @@ def extract__home_assistant():
 
     for date, states in states_per_dates.items():
         states_transformed = transform_states(states)
-        locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}', overwrite_field_names="entity_id, state, attributes::map(varchar, varchar) as attributes, last_changed, last_updated")
+        locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}', overwrite_field_names=overwrite_field_names)
 
     zones_transformed = extract_zones()
     write_raw(zones_transformed, f'home_assistant__zones/home_assistant__zones')
