@@ -120,7 +120,7 @@ def extract__home_assistant():
         locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}')
 
     zones_transformed = extract_zones()
-    write_raw(zones_transformed, f'home_assistant__zones/home_assistant__zones')
+    write_raw(zones_transformed, f'home_assistant__zones/home_assistant__zones', overwrite_field_names="entity_id, state, attributes::map(varchar, varchar) as attributes, last_changed, last_updated")
 
 if __name__ == "__main__":
     extract__home_assistant()

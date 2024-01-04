@@ -28,14 +28,17 @@ def config(con):
     con.sql("SET s3_url_style='path';")
 
 @task
-def write_raw(df: pd.DataFrame, path: str, columns: list = []) -> None:
+def write_raw(df: pd.DataFrame, path: str, columns: list = [], overwrite_field_names=None) -> None:
     # Adding empty dataframe to enforce columns
     empty = pd.DataFrame(columns=columns)
 
     df = pd.concat([empty, df], ignore_index=True)
     with duckdb.connect() as con:
         config(con)
-        con.sql(f"COPY df TO 's3://raw/{path}.parquet';")
+        if overwrite_select:
+            con.sql(f"COPY (SELECT {overwrite_select} FROM df) TO 's3://raw/{path}.parquet';")
+        else:
+            con.sql(f"COPY df TO 's3://raw/{path}.parquet';")
 
 @task
 def read_curated(file: str, columns:list=['*'], filter:str = '') -> pd.DataFrame:
