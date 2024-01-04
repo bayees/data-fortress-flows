@@ -35,8 +35,8 @@ def write_raw(df: pd.DataFrame, path: str, columns: list = [], overwrite_field_n
     df = pd.concat([empty, df], ignore_index=True)
     with duckdb.connect() as con:
         config(con)
-        if overwrite_select:
-            con.sql(f"COPY (SELECT {overwrite_select} FROM df) TO 's3://raw/{path}.parquet';")
+        if overwrite_field_names:
+            con.sql(f"COPY (SELECT {overwrite_field_names} FROM df) TO 's3://raw/{path}.parquet';")
         else:
             con.sql(f"COPY df TO 's3://raw/{path}.parquet';")
 

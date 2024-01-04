@@ -117,10 +117,10 @@ def extract__home_assistant():
     for date, states in states_per_dates.items():
         write_landing_result = write_landing_states(date, states)
         states_transformed = transform_states(write_landing_result, states)
-        locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}')
+        locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}', overwrite_field_names="entity_id, state, attributes::map(varchar, varchar) as attributes, last_changed, last_updated")
 
     zones_transformed = extract_zones()
-    write_raw(zones_transformed, f'home_assistant__zones/home_assistant__zones', overwrite_field_names="entity_id, state, attributes::map(varchar, varchar) as attributes, last_changed, last_updated")
+    write_raw(zones_transformed, f'home_assistant__zones/home_assistant__zones')
 
 if __name__ == "__main__":
     extract__home_assistant()
