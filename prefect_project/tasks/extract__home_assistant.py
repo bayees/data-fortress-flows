@@ -6,7 +6,7 @@ import datetime
 import workalendar.europe as workalendar
 from datetime import datetime, timedelta
 from prefect import flow, task
-from .generic_tasks import write_raw
+from generic_tasks import write_raw
 import os
 from dotenv import load_dotenv
 from minio import Minio
@@ -17,6 +17,7 @@ from websockets.sync.client import connect
 from minio import Minio
 import io
 import json
+import duckdb
 
 load_dotenv()
 
@@ -52,9 +53,9 @@ map {
     'altitude': attributes.gps_accuracy,
     'vertical_accuracy': attributes.gps_accuracy,
     'friendly_name': attributes.gps_accuracy,
-  },
-  last_changed,
-  last_updated
+  } as attributes,
+last_changed,
+last_updated
 """
 
 @task
@@ -121,7 +122,12 @@ def extract__home_assistant():
 
     for date, states in states_per_dates.items():
         states_transformed = transform_states(states)
-        locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}', overwrite_field_names=overwrite_field_names)
+        with duckdb.connect() as con:
+            data_type = con.sql(f"DESCRIBE SELECT attributes FROM states_transformed")["column_type"].fetchall()[0][0]
+            if data_type == "MAP(VARCHAR, VARCHAR)":
+                locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}')
+            else:
+                locations_success = write_raw(states_transformed, f'home_assistant__states/home_assistant__states_increment_{int(date.strftime("%Y%m%d"))}', overwrite_field_names=overwrite_field_names)
 
     zones_transformed = extract_zones()
     write_raw(zones_transformed, f'home_assistant__zones/home_assistant__zones')
