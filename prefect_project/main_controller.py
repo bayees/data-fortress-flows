@@ -8,6 +8,7 @@ from prefect_project.tasks.extract__storebox import extract__storebox
 from prefect_project.tasks.extract__todoist import extract__todoist
 from prefect_project.tasks.extract__notion import extract__notion
 from prefect_project.tasks.extract__logseq import extract__logseq
+from prefect_project.tasks.extract__google_sheets import extract__google_sheets
 from prefect_project.tasks.dbt_flows import dbt_build
 
 @flow
@@ -21,6 +22,7 @@ def main_run():
     #todoist_result = extract__todoist()
     logseq_result = extract__logseq()
     notion_result = extract__notion()
+    notion_result = extract__google_sheets()
 
     dbt_build(wait_for=[calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, notion_result, logseq_result])
 
