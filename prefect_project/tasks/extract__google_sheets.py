@@ -1,25 +1,26 @@
 from importlib.resources import path
 import pandas as pd
-import requests
-from generic_tasks import write_raw
+from .generic_tasks import write_raw
 from prefect import flow, task
-import os
 from dotenv import load_dotenv
 import gspread
 from gspread import Worksheet
 import pandas as pd
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
+import os
 
 load_dotenv()
 
 # define the scope
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 
+keyfile_dict = eval(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"))
+
 @task
 def extract_sheets() -> list[Worksheet]:
     # add credentials to the account
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('data-fortress-409619-7311068e688c.json', scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(keyfile_dict, scope)
 
     # authorize the clientsheet 
     client = gspread.authorize(credentials)
