@@ -1,6 +1,6 @@
 with 
 unpivoted as (
-    unpivot {{ ref('stg_notion__budget') }}
+    unpivot {{ ref('stg_google_sheets__budget') }}
     on "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"
     into
         name month

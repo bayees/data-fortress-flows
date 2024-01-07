@@ -1,3 +1,5 @@
+{{ config(enabled = false) }}
+
 select
         id,
         created_time::datetime as created_at,

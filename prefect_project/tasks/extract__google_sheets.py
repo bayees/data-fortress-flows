@@ -36,7 +36,7 @@ def extract_all_records(sheet: list[Worksheet]) -> list[dict]:
     dfs = []
 
     for worksheet in sheet:
-        sheeet_records_df = pd.json_normalize(worksheet.get_all_records())
+        sheeet_records_df = pd.json_normalize(worksheet.get_all_records(empty2zero=True, value_render_option='UNFORMATTED_VALUE'))
         sheeet_records_df = sheeet_records_df[sheeet_records_df['Year'] == int(worksheet.title)]
         dfs.append(sheeet_records_df)
 

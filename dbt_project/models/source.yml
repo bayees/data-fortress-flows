@@ -23,4 +23,4 @@ sources:
       - name: notion__budget
       - name: logseq__commits
       - name: logseq__modified_files
-          
+      - name: google_sheets__budget
