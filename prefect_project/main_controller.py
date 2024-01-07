@@ -21,10 +21,10 @@ def main_run():
     storebox_result = extract__storebox()
     #todoist_result = extract__todoist()
     logseq_result = extract__logseq()
-    notion_result = extract__notion()
-    notion_result = extract__google_sheets()
+    #notion_result = extract__notion()
+    google_sheets_result = extract__google_sheets()
 
-    dbt_build(wait_for=[calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, notion_result, logseq_result])
+    dbt_build(wait_for=[calendar_result, dawa_result, home_assistant_result, kapacity_utilization_bonus_result, spiir_result, storebox_result, google_sheets_result, logseq_result])
 
 if __name__ == "__main__":
     main_run()
