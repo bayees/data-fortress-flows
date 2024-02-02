@@ -6,10 +6,11 @@
 select
  	-- dimensions
  	category.category,
-	transaction_type AS category_type,
+	budget.transaction_type AS category_type,
  	category.expense_type,
 	category.main_category,
 	
+	budget.running_budget,
 	
 	calendar.year::int as year,
 	calendar.month_actual::int as month_actual,

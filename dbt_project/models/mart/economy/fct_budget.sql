@@ -18,6 +18,7 @@ select
     {{ dbt_utils.generate_surrogate_key(["unpivoted.budget_category"]) }} as category_id,
     unpivoted.transaction_type,
     unpivoted.amount,
+    unpivoted.running_budget,
 from unpivoted
 left join calendar_mapping
     on unpivoted.month = calendar_mapping.month_name_short

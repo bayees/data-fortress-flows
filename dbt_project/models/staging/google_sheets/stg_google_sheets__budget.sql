@@ -1,7 +1,8 @@
 select
         Category as budget_category,
         Type as transaction_type,
-        year::int as year,
+        "Running Budget"::boolean as running_budget,
+        Year::int as year,
         Jan::decimal(9,2) as jan,
         Feb::decimal(9,2) as feb,
         Mar::decimal(9,2) as mar,
