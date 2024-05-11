@@ -117,7 +117,7 @@ def extract__home_assistant():
     missing_dates = get_missing_dates()
 
     states_per_dates = extract_states(
-        entity="device_tracker.chriphone", missing_dates=missing_dates
+        entity="device_tracker.chriphone15", missing_dates=missing_dates
     )
 
     for date, states in states_per_dates.items():
