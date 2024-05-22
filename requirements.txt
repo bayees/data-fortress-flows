@@ -66,7 +66,7 @@ pyarrow==11.0.0
 pyasn1==0.5.0
 pyasn1-modules==0.3.0
 pycparser==2.21
-pydantic==1.10.7
+pydantic==1.10.13
 Pygments==2.15.1
 pyluach==2.2.0
 PyMeeus==0.5.12
